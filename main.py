@@ -59,22 +59,22 @@ while True:
                         except ValueError:
                             print("Alguna cantidad inválida.")
 
+                    cursos[codigoCurso] = {
+                        "nota_tarea": nTarea,
+                        "nota_examen": nExamen,
+                        "nota_proyecto": nProyecto
+                    }
+
                 estudiantes[carne] = {
                     "nombre": nombre,
                     "edad": edad,
                     "carrera": carrera,
-                    "cursos": {
-                        codigoCurso: {
-                            "nota_tarea": nTarea,
-                            "nota_examen": nExamen,
-                            "nota_proyecto": nProyecto
-                        }
-                    }
+                    "cursos": cursos
                 }
 
         print("Estudiantes registrados exitosamente.*")
     elif opcion == "2":
-        print("Estudiantes y sus cursos**")
+        print("\nEstudiantes y sus cursos**")
 
         for carne, info in estudiantes.items():
             print(f"Carne: {carne}, Nombre: {info['nombre']}, Edad: {info['edad']}, Carrera: {info['carrera']}")
@@ -86,5 +86,17 @@ while True:
                 print(f"        Promedio: {round(promedio,2)}")
     elif opcion == "3":
         print("Buscar estudiante por carne**")
+        carne_buscar = input("Ingrese el número de carne del estudiante a buscar: ")
+        if carne_buscar in estudiantes:
+            info = estudiantes[carne_buscar]
+            print(f"Carne: {carne_buscar}, Nombre: {info['nombre']}, Edad: {info['edad']}, Carrera: {info['carrera']}")
+
+            for curso, notas in info['cursos'].items():
+                print(f"  Curso: {curso}, Tarea: {notas['nota_tarea']}, Examen: {notas['nota_examen']}, Proyecto: {notas['nota_proyecto']}")
+                suma = notas['nota_tarea'] + notas['nota_examen'] + notas['nota_proyecto']
+                promedio = suma / 3
+                print(f"        Promedio: {round(promedio,2)}")
+        else:
+            print("Estudiante no encontrado.")
     else:
         print("Opción no válida. Por favor, intente de nuevo.")
